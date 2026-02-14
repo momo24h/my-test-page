@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>老子道德经：原文译文注释</title>
+    <style>
+        /* 默认主题 (1: 典雅) */
+        :root, [data-theme="1"] {
+            --bg-color: #fcfaf7;
+            --note-bg: #f3f0e9;
+            --item-bg: #ece5d8;
+            --last-bg: #e5e9f0;
+            --accent-color: #a67c52;
+            --text-main: #2c3e50;
+            --title-color: #1a1a1a;
+            --guide-color: #8c8c8c;
+            --highlight-blue: rgba(52, 152, 219, 0.2);
+            --error-red: #ff4d4f;
+        }
+
+        /* 主题 2: 沉静 (夜间) */
+        [data-theme="2"] {
+            --bg-color: #2b2622;
+            --note-bg: #36302a;
+            --item-bg: #3f3932;
+            --last-bg: #332d28;
+            --accent-color: #d4a373;
+            --text-main: #bdae93;
+            --title-color: #ebdbb2;
+            --guide-color: #928374;
+        }
+
+		/* 主题 3: 玄墨 (深色) */
+		[data-theme="3"] {
+			--bg-color: #1a1a1a;
+			--note-bg: #262626;
+			--item-bg: #333333;
+			--last-bg: #202020;
+			--accent-color: #c9a063; /* 古铜金 */
+			--text-main: #d1d1d1;
+			--title-color: #ffffff;
+			--guide-color: #888888;
+		}
+
+        /* 主题 4: 暮色 */
+        [data-theme="4"] {
+            --bg-color: #1a1c22;
+            --note-bg: #24272e;
+            --item-bg: #2d313a;
+            --last-bg: #1e222a;
+            --accent-color: #6a88b5;
+            --text-main: #a0a6b5;
+            --title-color: #d1d6e0;
+            --guide-color: #62697a;
+        }
+
+		/* 主题 5: 青瓷 */
+		[data-theme="5"] {
+			--bg-color: #f0f7f4;
+			--note-bg: #e4eeea;
+			--item-bg: #d8e6e0;
+			--last-bg: #eaf2ef;
+			--accent-color: #5b8a72;
+			--text-main: #3d4f46;
+			--title-color: #2c3e35;
+			--guide-color: #7a9e8d;
+		}
+
+        * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+        
+        body { 
+            font-family: 
+				"Source Han Serif CN", 
+				"Noto Serif CJK SC", 
+				"Songti SC", 
+				"STSong", 
+				"SimSun", 
+				"Web宋体", 
+				serif;
+            line-height: 1.8; max-width: 800px; margin: 0 auto; padding: 20px 18px 60px;
+            background-color: var(--bg-color); color: var(--text-main);
+            scroll-behavior: smooth;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* 暗色模式针对导航栏的微调 */
+        body.dark-mode #nav-panel { background: #242526; color: #d1d1d1; }
+        body.dark-mode .nav-item { border-bottom: 1px solid #333; }
+
+        #error-monitor { 
+            margin: 10px; padding: 15px; background: #fff1f0; 
+            border: 1px solid #ffa39e; border-radius: 8px; 
+            color: var(--error-red); display: none; font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        header { text-align: center; margin-bottom: 0px; padding-bottom: 10px; position: relative; z-index: 10; background: var(--bg-color); }
+        .main-title { font-size: 2.1em; color: var(--title-color); margin: 0; font-weight: 400; letter-spacing: 4px; cursor: pointer; user-select: none; opacity: 0.9;}
+        
+
+        #reveal-btn { font-size: 1.5em; cursor: pointer; margin-top: 10px; display: inline-block; user-select: none;}
+
+        .reveal-container { 
+            position: relative; 
+            overflow: hidden; 
+			margin-top: 0;
+        }
+        
+        .hidden-info {
+			display: none;
+        }
+
+		.reveal-container.open .hidden-info {
+    		display: block;
+		}
+		
+		.reveal-container.open  {
+    		margin-top: 10px;
+		}
+        
+        .project-meta {
+            margin: 10px auto; padding: 15px 20px; max-width: 500px; font-size: 0.82em;
+            color: var(--guide-color); border-top: 1px solid rgba(166, 124, 82, 0.2); border-bottom: 1px solid rgba(166, 124, 82, 0.2);
+        }
+        .meta-item { display: flex; justify-content: space-between; margin: 6px 0; }
+        .meta-label { color: var(--accent-color); font-weight: 500; }
+        .meta-value a { color: var(--guide-color); text-decoration: none; border-bottom: 1px solid #ccc; }
+
+        #moving-content {
+            position: relative;
+            z-index: 2;
+            background: var(--bg-color);
+        }
+
+        #menu-btn {
+            position: fixed; right: 20px; bottom: 30px; width: 50px; height: 50px;
+            background: var(--accent-color); color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer; z-index: 100;
+        }
+        #nav-panel {
+            position: fixed; top: 0; right: -280px; width: 280px; height: 100%;
+            background: var(--bg-color); box-shadow: -4px 0 15px rgba(0,0,0,0.1);
+            z-index: 101; transition: 0.3s ease; padding: 0px; overflow-y: auto;
+            overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+        }
+        #nav-panel.open { right: 0; }
+        .nav-item { padding: 12px; border-bottom: 1px solid rgba(0,0,0,0.05); cursor: pointer; font-size: 0.95em; }
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: none; z-index: 99; }
+
+        @keyframes blueFlash {
+            0% { background-color: transparent; }
+            30% { background-color: var(--highlight-blue); }
+            100% { background-color: transparent; }
+        }
+        .flash-active { animation: blueFlash 1.5s ease-out; border-radius: 8px; }
+
+        h2 { margin: 40px 0 20px; font-size: 1.5em; font-weight: 400; cursor: pointer; padding: 10px 0; text-align: center; border-bottom: 1px solid rgba(166, 124, 82, 0.1); color: var(--title-color); }
+
+        .section-wrapper { margin-bottom: 12px; position: relative; }
+        .content-text { margin: 0; text-indent: 2em; text-align: justify; font-size: 1.15em; position: relative; }
+        .indent-trigger { position: absolute; left: 0; top: 0; width: 2.5em; height: 1.6em; cursor: pointer; z-index: 10; }
+        
+        .annotation-box { display: none; margin: 12px 0 20px; padding: 16px; background-color: var(--note-bg); border-radius: 8px; font-size: 0.95em; border-left: 3px solid var(--accent-color); }
+        .details-indicator { display: block; margin: 8px auto 0; text-align: center; color: var(--accent-color); cursor: pointer; font-size: 1.2em; opacity: 0.6; }
+        .details-content { display: none; margin-top: 15px; }
+        
+        .item-container ol { margin: 0; padding-left: 1.5em; color: var(--text-main); }
+        .item-container li { margin-bottom: 8px; }
+        .item-container li::marker { color: var(--accent-color); font-weight: bold; }
+
+        .last-container { background: var(--last-bg); padding: 12px; border-radius: 6px; margin-top: 10px; border-top: 1px solid rgba(0,0,0,0.05); }
+        .term-tag { border-bottom: 1.5px dashed var(--accent-color); color: var(--accent-color); font-weight: 500; }
+
+		footer { margin: 80px 0 60px; text-align: center; }
+		.end-mark { 
+			display: flex; 
+			align-items: center; 
+			justify-content: center;
+			font-size: 1em; 
+			color: var(--accent-color); 
+			opacity: 0.5; 
+			letter-spacing: 6px; 
+		}
+		.end-mark::before, .end-mark::after {
+			content: ""; 
+			flex: 1; 
+			height: 1px; 
+			background: var(--accent-color); 
+			opacity: 0.3; 
+			margin: 0 20px;
+			max-width: 100px; /* 设置横线的最大长度 */
+		}
+    
+        .toggle-wrapper { display: flex; flex-direction: column; gap: 12px; padding: 0px 18px 20px; border-bottom: 1px solid rgba(166, 124, 82, 0.2); background: var(--bg-color); }
+        .switch-row { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+        .switch-container { display: flex; align-items: center; gap: 8px; }
+        .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 20px; }
+        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--accent-color); }
+        input:checked + .slider:before { transform: translateX(16px); }
+        .switch-label { font-size: 0.85em; color: var(--guide-color); }
+
+        #theme-toggle {
+            display: flex; justify-content: space-between; align-items: center;
+            width: 100%; padding: 10px 15px; border: 1.5px solid var(--accent-color);
+            border-radius: 8px; color: var(--accent-color); cursor: pointer;
+            font-weight: bold; transition: all 0.2s; background: transparent;
+            margin-top: 15px; margin-bottom: 5px;
+        }
+        #theme-toggle:active { transform: scale(0.98); opacity: 0.8; }
+        .theme-name { font-size: 0.9em; }
+        .theme-id { font-family: monospace; background: var(--accent-color); color: var(--bg-color); padding: 0px 8px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+<script id="data-part-1" type="application/json">
+[
+    ["第一章🌱道可道也，非恆道也。名可名也，非恆名也。🌱無名，萬物之始也；有名，萬物之母也。故恆無欲也，以觀其眇；恆有欲也，以觀其所徼。兩者同出，異名同謂。玄之又玄，衆眇之門。",
+		["可以从外部描述的道，不是恒久适用之道。可以从外部命名的名，不是恒久适用之名。", 
+			"✏️道：理论，通往幸福的路。", 
+			"✏️名：模型、理论要素。是对现实抽象的结果，是构成理论的要素，是保证理论与实际相符的关键。"
+		],
+		["[term无名]，是[term万物]之[term始]；[term有名]，是[term万物]之[term母]。所以，总是无欲，以观察[term始]侧细微规律；总是有欲，以观察[term母]侧所展现的边界。[term始]与[term母]同时显现，不同的名指向同物。意义深远再深远，众细微规律的入口。"]
+    ]
+]
+</script>
+
+<script id="data-part-2" type="application/json">
+[
+	["第三十八章🌱上德不德，是以有德。下德不失德，是以無德。🌱上德無爲而無以爲也，上仁爲之而無以爲也，上義爲之而有以爲也，上禮爲之而莫之應也，則攘臂而扔之。🌱故失道而後德，失德而後仁，失仁而後義，失義而後禮。夫禮者，忠信之薄而亂之首也；前識者，道之華而愚之首也。🌱是以大丈夫，居其厚不居其薄；居其實，不居其華。故去彼取此。",
+		["[todo]上[term德]没有美德，因此符合底层机制。下[term德]不丢掉美德，因此违背底层机制。",
+			"📝上德是基于事实驱动的“不得不”，下德是基于形象驱动的“应该”。"
+		],
+		["上[term德]以无[term为]处事，不认为有所作为。上“仁”以有[term为]处事，不认为有所作为。上“义”以有[term为]处事，认为有所作为。上“礼”以有[term为]处事，没有得到预期回应，就卷起袖子露出胳膊，拉拽对方。"],
+		["所以，丢掉[term道]之后是[term德]，丢掉[term德]之后是“仁”，丢掉“仁”之后是“义”，失掉“义”之后是“礼”。“礼”这个东西啊，是忠信的浅薄表现，是祸乱之首。从表现层面去认识[term德]的，都是底层机制所展现的浮华，是愚昧迷误之首。"],
+		["因此大丈夫，居于[term德]的深厚处而不居于[term德]的浅薄处；居于[term德]的事实而不居于[term德]的浮华。所以，抛弃浅薄、浮华，选择深厚、事实。"]
+	]
+]
+</script>
+
+<div id="error-monitor"></div>
+<div id="menu-btn">📖</div>
+<div id="overlay"></div>
+<nav id="nav-panel">
+    <div class="toggle-wrapper">
+        <div id="theme-toggle">
+            <span class="theme-name">配色方案</span>
+            <span class="theme-id">1</span>
+        </div>
+        <div class="switch-row">
+            <div class="switch-container">
+                <label class="switch">
+                    <input type="checkbox" id="expand-toggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="switch-label">自动展开</span>
+            </div>
+        </div>
+        <div class="switch-row">
+            <div class="switch-container">
+                <label class="switch">
+                    <input type="checkbox" id="sync-toggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="switch-label">同时展开</span>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<header>
+    <h1 class="main-title">老子道德经</br>原文译文注释</h1>
+    <div id="reveal-btn" style="font-weight: bold; -webkit-text-stroke: 0.6px currentColor;">ⓘ</div>
+</header>
+
+<div class="reveal-container" id="reveal-area">
+    <div class="hidden-info" id="info-layer">
+        <div class="project-meta">
+            <div style="text-align: right; margin: 10px 0 5px; color: var(--accent-color); font-weight: bold; letter-spacing: 2px;">
+                项目信息
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">项目仓库</span>
+				<span class="meta-value">
+					<a href="https://github.com/momo24h/daodejing1" target="_blank" onclick="event.stopPropagation();" style="color: inherit; text-decoration: none; border-bottom: 1px dashed var(--guide-color);">
+						https://github.com/momo24h/daodejing1
+					</a>
+				</span>            
+			</div>
+            <div class="meta-item">
+                <span class="meta-label"></span>
+                <span class="meta-value">⚠️ 仓库内有【字典】【字典工具】的介绍</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">所用底本</span>
+                <span class="meta-value">
+					<a href="https://github.com/momo24h/daodejing" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed var(--guide-color);">
+            			老子道德经：四种原文表.pdf
+        			</a> 中的校订文
+				</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">使用协议</span>
+                <span class="meta-value">CC0 1.0</span>
+            </div>
+
+            <div style="text-align: right; margin: 15px 0 5px; color: var(--accent-color); font-weight: bold; letter-spacing: 2px;">
+            	操作指南
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">点击 [ 标题行 ] </span>
+                <span class="meta-value">展开/关闭 包含范围内的译文</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">点击 [ 段首缩进 ]</span>
+                <span class="meta-value">展开/关闭 包含范围内的译文</span>
+            </div>
+           	<div class="meta-item">
+                <span class="meta-label">自动展开</span>
+                <span class="meta-value">刷新页面时自动展开所有译文</span>
+            </div>
+           	<div class="meta-item">
+                <span class="meta-label">同时展开</span>
+                <span class="meta-value">展开译文时同时也展开注释</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="moving-content">
+        <div id="book-canvas"></div>
+        <footer><div class="end-mark">END</div></footer>
+    </div>
+</div>
+
+<script>
+(() => {
+    "use strict";
+    
+    // --- 状态与初始化 ---
+    let isSyncEnabled = (localStorage.getItem('sync-enabled') !== 'false');
+    let isExpandEnabled = (localStorage.getItem('auto-expand-enabled') === 'true');
+    let currentTheme = parseInt(localStorage.getItem('user-theme')) || 1;
+
+    const canvas = document.querySelector('#book-canvas');
+    const navPanel = document.querySelector('#nav-panel');
+    const monitor = document.querySelector('#error-monitor');
+    const themeBtn = document.querySelector('#theme-toggle');
+    const syncSwitch = document.querySelector('#sync-toggle');
+    const expandSwitch = document.querySelector('#expand-toggle');
+    const overlay = document.querySelector('#overlay');
+    const mainTitle = document.querySelector('.main-title');
+
+    // 撕裂效果控制逻辑
+    const revealBtn = document.querySelector('#reveal-btn');
+    const revealArea = document.querySelector('#reveal-area');
+    const infoLayer = document.querySelector('#info-layer');
+    const movingContent = document.querySelector('#moving-content');
+
+    revealBtn.onclick = () => {
+		revealArea.classList.toggle('open');
+		revealBtn.classList.toggle('active');
+    };
+
+    // 合并数据
+    const bookData = JSON.parse(document.querySelector('#data-part-1').textContent)
+                     .concat(JSON.parse(document.querySelector('#data-part-2').textContent));
+
+    const Utils = {
+        inject: text => text.replace(/\[term(.*?)\]/g, '<span class="term-tag">$1</span>'),
+        jumpTo: (idx) => {
+			const target = document.getElementById(`chapter-${idx}`);
+            if (target) {
+                // 使用 scrollIntoView 直接滚动到元素顶部
+                target.scrollIntoView({ behavior: 'auto', block: 'start' });
+
+                // 动画效果处理
+                target.classList.remove('flash-active');
+                void target.offsetWidth; // 强制重绘
+                target.classList.add('flash-active');
+            }
+        },
+        resetAnnotation: (box) => {
+            const details = box.querySelector('.details-content');
+            const indicator = box.querySelector('.details-indicator');
+            if (details) details.style.display = 'none';
+            if (indicator) indicator.style.display = 'block';
+        }
+    };
+
+    // --- 数据校验 ---
+    const validationErrors = [];
+    bookData.forEach((chapter, cIdx) => {
+        const title = chapter[0].split('🌱')[0];
+        const rawParas = chapter[0].split('🌱').slice(1);
+        const transGroups = chapter.slice(1);
+        if (rawParas.length !== transGroups.length) {
+            validationErrors.push(`【${title}】原文有 ${rawParas.length} 段，但译文有 ${transGroups.length} 组。`);
+        }
+        transGroups.forEach((group, gIdx) => {
+            group.forEach((text, tIdx) => {
+                const cleanText = text.trim();
+                if (tIdx > 0 && !cleanText.startsWith('✏️') && !cleanText.startsWith('📝')) {
+                    validationErrors.push(`【${title}】第 ${gIdx+1} 组第 ${tIdx+1} 项必须以 ✏️ 或 📝 开始。`);
+                }
+                if (cleanText.startsWith('📝') && tIdx !== group.length - 1) {
+                    validationErrors.push(`【${title}】第 ${gIdx+1} 组的 📝 必须是最后一项。`);
+                }
+            });
+        });
+    });
+
+    if (validationErrors.length > 0) {
+        monitor.style.display = 'block';
+        monitor.innerHTML = `<b>底本校验不通过：</b><br>• ${validationErrors.join('<br>• ')}`;
+        return; 
+    }
+
+    // --- 渲染逻辑 ---
+    const renderAnnotation = (annoGroup, box) => {
+        if (!annoGroup || !annoGroup.length) return null;
+        const introDiv = document.createElement('div');
+        introDiv.innerHTML = Utils.inject(annoGroup[0]);
+        box.appendChild(introDiv);
+
+        const detailsContent = document.createElement('div');
+        detailsContent.className = 'details-content';
+        const ol = document.createElement('ol'); 
+        let hasDetails = false, lastNode = null;
+
+        for (let i = 1; i < annoGroup.length; i++) {
+            const str = annoGroup[i].trim();
+            if (str.startsWith('✏️')) {
+                hasDetails = true;
+                const li = document.createElement('li');
+                li.innerHTML = Utils.inject(str.replace(/^✏️/, '').trim());
+                ol.appendChild(li);
+            } else if (str.startsWith('📝')) {
+                hasDetails = true;
+                lastNode = document.createElement('div');
+                lastNode.className = 'last-container';
+                str.replace(/^📝/, '').trim().split('[split]').forEach(seg => {
+                    const p = document.createElement('p');
+                    p.style.textIndent = "2em"; p.style.margin = "0 0 8px 0";
+                    p.innerHTML = Utils.inject(seg);
+                    lastNode.appendChild(p);
+                });
+            }
+        }
+
+        if (hasDetails) {
+            const indicator = document.createElement('div');
+            indicator.className = 'details-indicator';
+            indicator.textContent = '▾';
+            indicator.onclick = (e) => { 
+                e.stopPropagation(); 
+                detailsContent.style.display = 'block'; 
+                indicator.style.display = 'none'; 
+            };
+            const itemWrap = document.createElement('div');
+            itemWrap.className = 'item-container';
+            if (ol.children.length > 0) itemWrap.appendChild(ol);
+            detailsContent.appendChild(itemWrap);
+            if (lastNode) detailsContent.appendChild(lastNode);
+            box.appendChild(indicator);
+            box.appendChild(detailsContent);
+            return indicator;
+        }
+        return null;
+    };
+
+    bookData.forEach((chapterData, idx) => {
+        const chapterSection = document.createElement('section');
+        chapterSection.id = `chapter-${idx}`;
+        chapterSection.style.padding = "10px";
+        
+        const parts = chapterData[0].split('🌱');
+        const title = parts[0];
+        const paragraphs = parts.slice(1);
+        const allAnnos = chapterData.slice(1);
+
+        const h2 = document.createElement('h2');
+        h2.textContent = title;
+        chapterSection.appendChild(h2);
+
+        const chapterBoxes = [];
+        paragraphs.forEach((pText, i) => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'section-wrapper';
+            const pNode = document.createElement('p');
+            pNode.className = 'content-text';
+            pNode.innerHTML = Utils.inject(pText);
+            
+            const trigger = document.createElement('div');
+            trigger.className = 'indent-trigger';
+            
+            const box = document.createElement('div');
+            box.className = 'annotation-box';
+            chapterBoxes.push(box);
+
+            const indicator = renderAnnotation(allAnnos[i], box);
+
+            trigger.onclick = () => {
+                if (box.style.display !== 'block') {
+                    box.style.display = 'block';
+                    if (isSyncEnabled && indicator) { indicator.click(); }
+                } else {
+                    box.style.display = 'none';
+                    Utils.resetAnnotation(box);
+                }
+            };
+            wrapper.append(trigger, pNode, box);
+            chapterSection.appendChild(wrapper);
+        });
+
+        h2.onclick = () => {
+            const anyOpen = chapterBoxes.some(b => b.style.display === 'block');
+            chapterBoxes.forEach(b => { 
+                if (anyOpen) {
+                    b.style.display = 'none';
+                    Utils.resetAnnotation(b);
+                } else {
+                    b.style.display = 'block';
+                    if (isSyncEnabled) {
+                        const ind = b.querySelector('.details-indicator');
+                        if (ind && ind.style.display !== 'none') ind.click();
+                    }
+                }
+            });
+        };
+
+        const navItem = document.createElement('div');
+        navItem.className = 'nav-item';
+        navItem.textContent = title;
+        navItem.onclick = () => { Utils.jumpTo(idx); navPanel.classList.remove('open'); overlay.style.display='none'; };
+        navPanel.appendChild(navItem);
+        canvas.appendChild(chapterSection);
+    });
+
+    // --- 主题与控制逻辑优化 ---
+    const applyTheme = (themeId) => {
+        document.documentElement.setAttribute('data-theme', themeId);
+        const idSpan = themeBtn.querySelector('.theme-id');
+        if(idSpan) idSpan.textContent = themeId;
+        
+        localStorage.setItem('user-theme', themeId);
+        if(themeId === 2 || themeId === 3) {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
+    };
+
+    applyTheme(currentTheme);
+    if (syncSwitch) syncSwitch.checked = isSyncEnabled;
+    if (expandSwitch) expandSwitch.checked = isExpandEnabled;
+
+    themeBtn.onclick = (e) => {
+        e.stopPropagation();
+        currentTheme = currentTheme >= 5 ? 1 : currentTheme + 1;
+        applyTheme(currentTheme);
+    };
+
+    syncSwitch.onchange = (e) => { 
+        isSyncEnabled = e.target.checked; 
+        localStorage.setItem('sync-enabled', isSyncEnabled);
+    };
+
+    expandSwitch.onchange = (e) => {
+        isExpandEnabled = e.target.checked;
+        localStorage.setItem('auto-expand-enabled', isExpandEnabled);
+    };
+
+    document.querySelector('#menu-btn').onclick = () => { 
+        navPanel.classList.add('open'); 
+        overlay.style.display = 'block'; 
+    };
+    
+    overlay.onclick = () => { 
+        navPanel.classList.remove('open'); 
+        overlay.style.display = 'none'; 
+    };
+
+    if (mainTitle) {
+        mainTitle.onclick = () => {
+            const allBoxes = Array.from(document.querySelectorAll('.annotation-box'));
+            const anyOpen = allBoxes.some(b => b.style.display === 'block');
+            document.querySelectorAll('#book-canvas h2').forEach(h2 => {
+                const boxes = h2.parentElement.querySelectorAll('.annotation-box');
+                const isChapterOpen = Array.from(boxes).some(b => b.style.display === 'block');
+                if (anyOpen) {
+                    if (isChapterOpen) h2.click(); 
+                } else {
+                    h2.click(); 
+                }
+            });
+        };
+    }
+
+    if (isExpandEnabled && mainTitle) {
+        mainTitle.click();
+    }
+    
+})();
+</script>
+</body>
+</html>
